@@ -1,0 +1,578 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="color-scheme" content="light dark" />
+<link rel="icon" href="data:," />
+<title>AI 营销 Agent 框架与精读</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@600;700;900&family=Noto+Sans+SC:wght@400;500;700&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --bg:#fcfcf9; --surface:#ffffff; --surface2:#f3f1ea; --ink:#191a17; --muted:#5c5e57;
+    --line:#ddd9cc; --accent:#0e6b5e;
+    --accent-soft:#e2efec; --rust:#b14e24; --rust-soft:#f7e9e0; --navy:#274b73; --navy-soft:#e6edf5;
+    --gold:#8a6d1f; --gold-soft:#f4edd6; --radius:10px;
+    --serif:"Noto Serif SC", "Songti SC", serif; --sans:"Noto Sans SC","PingFang SC",system-ui,sans-serif;
+    --mono:"IBM Plex Mono", ui-monospace, monospace;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{ --bg:#12130f; --surface:#1b1c18; --surface2:#23241f; --ink:#ecebe4; --muted:#a7a89e;
+      --line:#35362e; --accent:#4fc3ae; --accent-soft:#17332e; --rust:#e08a5f; --rust-soft:#3a2418;
+      --navy:#8fb4dd; --navy-soft:#1d2c40; --gold:#d3b45e; --gold-soft:#332c16; }
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.75;-webkit-font-smoothing:antialiased}
+  a{color:var(--accent);text-decoration-thickness:1px;text-underline-offset:3px}
+  button{min-height:40px}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 20px 80px}
+  /* ---------- hero ---------- */
+  .hero{padding:52px 0 8px;border-bottom:3px double var(--line)}
+  .hero .dateline{font-family:var(--mono);font-size:12.5px;letter-spacing:.08em;color:var(--muted);display:flex;flex-wrap:wrap;gap:6px 18px}
+  .hero h1{font-family:var(--serif);font-weight:900;font-size:clamp(30px,5.4vw,46px);line-height:1.25;margin:16px 0 6px}
+  .hero .sub{font-family:var(--serif);font-size:clamp(17px,2.6vw,21px);color:var(--muted);margin:0 0 20px;line-height:1.6}
+  .thesis{display:grid;grid-template-columns:1fr;gap:12px;margin:22px 0 8px}
+  @media(min-width:760px){.thesis{grid-template-columns:repeat(3,1fr)}}
+  .thesis .t{background:var(--surface);border:1px solid var(--line);border-top:4px solid var(--accent);border-radius:var(--radius);padding:16px 18px}
+  .thesis .t.rust{border-top-color:var(--rust)} .thesis .t.navy{border-top-color:var(--navy)}
+  .thesis .t b{font-family:var(--serif);font-size:16.5px;display:block;margin-bottom:4px}
+  .thesis .t p{margin:0;font-size:14px;color:var(--muted);line-height:1.65}
+  .thesis .t .big{font-family:var(--mono);font-size:26px;font-weight:600;color:var(--ink);display:block;margin-bottom:2px}
+  /* ---------- layout ---------- */
+  .layout{display:grid;grid-template-columns:1fr;gap:0}
+  @media(min-width:1024px){.layout{grid-template-columns:208px 1fr;gap:44px}}
+  nav.toc{display:none}
+  @media(min-width:1024px){
+    nav.toc{display:block;position:sticky;top:24px;align-self:start;padding-top:36px;font-size:14px}
+    nav.toc a{display:block;color:var(--muted);text-decoration:none;padding:7px 10px;border-left:2px solid var(--line);min-height:36px}
+    nav.toc a:hover{color:var(--accent);border-left-color:var(--accent)}
+    nav.toc .toc-h{font-family:var(--mono);font-size:11.5px;letter-spacing:.12em;color:var(--muted);padding:0 10px 8px}
+  }
+  section{padding-top:44px}
+  section > h2{font-family:var(--serif);font-weight:900;font-size:clamp(23px,3.6vw,30px);line-height:1.35;margin:0 0 6px;display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+  section > h2 .no{font-family:var(--mono);font-size:14px;color:var(--accent);font-weight:600}
+  section > .lede{color:var(--muted);margin:0 0 22px;max-width:46em}
+  h3{font-family:var(--serif);font-size:19px;margin:28px 0 10px}
+  p{margin:0 0 14px}
+  .small{font-size:13.5px;color:var(--muted)}
+  .src{font-family:var(--mono);font-size:12px;color:var(--muted)}
+  /* ---------- function map ---------- */
+  .fmap{display:grid;grid-template-columns:1fr;gap:12px}
+  @media(min-width:760px){.fmap{grid-template-columns:1fr 1fr}}
+  .fn{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:18px}
+  .fn h3{margin:0 0 8px;font-size:17px}
+  .fn dl{margin:0;font-size:14px}
+  .fn dt{font-weight:700;font-size:12.5px;letter-spacing:.04em;color:var(--accent);margin-top:10px}
+  .fn dt:first-child{margin-top:0}
+  .fn dd{margin:2px 0 0;color:var(--muted);line-height:1.65}
+  .note{border-left:3px solid var(--gold);background:var(--gold-soft);border-radius:0 var(--radius) var(--radius) 0;padding:14px 18px;margin:18px 0;font-size:14.5px}
+  .note b{font-family:var(--serif)}
+  /* ---------- platform cards ---------- */
+  .plats{display:grid;grid-template-columns:1fr;gap:14px}
+  @media(min-width:900px){.plats{grid-template-columns:repeat(3,1fr)}}
+  .plat{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:20px;display:flex;flex-direction:column}
+  .plat .pname{font-family:var(--serif);font-weight:900;font-size:20px}
+  .plat .pprod{font-family:var(--mono);font-size:12.5px;color:var(--accent);margin:2px 0 12px}
+  .plat h4{margin:14px 0 4px;font-size:13px;letter-spacing:.05em;color:var(--muted)}
+  .plat h4:first-of-type{margin-top:0}
+  .plat p,.plat li{font-size:14px;color:var(--muted);line-height:1.65}
+  .plat ul{margin:0;padding-left:18px}
+  .plat p{margin:0}
+  .api{margin-top:22px;background:var(--surface2);border-radius:var(--radius);padding:18px 20px}
+  .api h3{margin-top:0}
+  .api-grid{display:grid;grid-template-columns:1fr;gap:14px}
+  @media(min-width:760px){.api-grid{grid-template-columns:repeat(3,1fr)}}
+  .api-grid .a b{font-family:var(--serif);display:block;margin-bottom:2px}
+  .api-grid .a p{font-size:13.5px;color:var(--muted);margin:0}
+  /* ---------- architecture ---------- */
+  .arch{display:flex;flex-direction:column;gap:0}
+  .layer{border:1.5px solid var(--ink);border-radius:var(--radius);padding:16px 20px;background:var(--surface)}
+  .layer .lname{font-family:var(--mono);font-weight:600;font-size:13px;letter-spacing:.1em;color:var(--accent)}
+  .layer h3{margin:2px 0 6px;font-size:18px}
+  .layer p{font-size:14px;color:var(--muted);margin:0}
+  .arrow{align-self:center;font-size:18px;color:var(--muted);line-height:1.4;padding:2px 0}
+  .guard{border:1.5px dashed var(--rust);border-radius:var(--radius);padding:14px 20px;background:var(--rust-soft);font-size:14.5px;margin-top:14px}
+  .guard b{color:var(--rust);font-family:var(--serif)}
+  /* ---------- ladder ---------- */
+  .ladder{display:flex;flex-direction:column;gap:10px}
+  .rung{display:grid;grid-template-columns:52px 1fr;gap:14px;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:16px 18px}
+  .rung .lv{font-family:var(--mono);font-weight:600;font-size:20px;color:var(--accent);text-align:center;padding-top:2px}
+  .rung h3{margin:0 0 4px;font-size:16.5px}
+  .rung p{font-size:14px;color:var(--muted);margin:0 0 4px}
+  .rung .exit{font-size:13.5px;color:var(--ink)}
+  .rung .exit b{color:var(--rust)}
+  .steps{counter-reset:st;display:grid;grid-template-columns:1fr;gap:10px;margin-top:6px}
+  @media(min-width:760px){.steps{grid-template-columns:1fr 1fr}}
+  .step{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:14px 16px;font-size:14.5px}
+  .step::before{counter-increment:st;content:counter(st,decimal-leading-zero);font-family:var(--mono);font-weight:600;color:var(--accent);display:block;font-size:13px;margin-bottom:2px}
+  .step b{font-family:var(--serif)}
+  /* ---------- concepts ---------- */
+  .concepts{display:grid;grid-template-columns:1fr;gap:12px}
+  @media(min-width:760px){.concepts{grid-template-columns:1fr 1fr}}
+  .concept{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:18px}
+  .concept h3{margin:0 0 6px;font-size:16.5px}
+  .concept p,.concept li{font-size:14px;color:var(--muted);line-height:1.7}
+  .concept p{margin:0}.concept ul{margin:6px 0 0;padding-left:18px}
+  .concept.wide{grid-column:1/-1}
+  /* ---------- chart ---------- */
+  .chartcard{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:20px}
+  .chartcard h3{margin-top:0}
+  .chart-scroll{width:100%}
+  svg.chart{width:100%;height:auto;display:block}
+  svg.chart text{font-family:var(--sans);fill:var(--ink)}
+  svg.chart .muted-t{fill:var(--muted)}
+  svg.chart .grid{stroke:var(--line);stroke-width:1}
+  svg.chart .bar{fill:var(--accent)}
+  svg.chart .bar.dim{fill:var(--rust)}
+  svg.chart .iqr{stroke:var(--gold);stroke-width:3}
+  /* ---------- ecosystem ---------- */
+  .eco{display:grid;grid-template-columns:1fr;gap:12px}
+  @media(min-width:760px){.eco{grid-template-columns:1fr 1fr}}
+  .eco .e{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:16px 18px}
+  .eco .e b{font-family:var(--serif);display:block;margin-bottom:3px}
+  .eco .e p{font-size:14px;color:var(--muted);margin:0}
+  /* ---------- reading ---------- */
+  .filters{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 8px}
+  .filters button{font-family:var(--sans);font-size:14px;padding:8px 16px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer;min-height:40px}
+  .filters button[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:#fff}
+  @media (prefers-color-scheme: dark){.filters button[aria-pressed="true"]{color:#0c1512}}
+  .readcount{font-size:13.5px;color:var(--muted);margin:0 0 16px}
+  .articles{display:flex;flex-direction:column;gap:14px}
+  .art{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:20px;position:relative}
+  .art.read{opacity:.62}
+  .art .top{display:flex;gap:12px;align-items:flex-start}
+  .art .num{font-family:var(--mono);font-weight:600;font-size:22px;color:var(--accent);line-height:1.2;min-width:34px}
+  .art h3{margin:0;font-size:18px;line-height:1.45}
+  .art h3 a{color:var(--ink);text-decoration:none}
+  .art h3 a:hover{color:var(--accent);text-decoration:underline}
+  .art .meta{font-family:var(--mono);font-size:12.5px;color:var(--muted);margin-top:3px}
+  .tag{display:inline-block;font-size:12px;font-weight:700;padding:1px 9px;border-radius:999px;background:var(--accent-soft);color:var(--accent);margin-left:6px;vertical-align:2px}
+  .tag.measure{background:var(--navy-soft);color:var(--navy)} .tag.gov{background:var(--rust-soft);color:var(--rust)} .tag.plat{background:var(--gold-soft);color:var(--gold)}
+  .art .sum{font-size:14.5px;margin:10px 0 8px}
+  .art .why{font-size:14px;color:var(--muted);border-top:1px dashed var(--line);padding-top:8px;margin:0}
+  .art .why b{color:var(--ink)}
+  .art .row{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:12px}
+  .art .open{font-weight:700;font-size:14.5px}
+  .art .mark{margin-left:auto;font-family:var(--sans);font-size:13.5px;padding:6px 14px;border-radius:999px;border:1px solid var(--line);background:transparent;color:var(--muted);cursor:pointer;min-height:36px}
+  .art .mark[aria-pressed="true"]{background:var(--accent-soft);color:var(--accent);border-color:var(--accent)}
+  /* ---------- plan ---------- */
+  .plan{display:grid;grid-template-columns:1fr;gap:10px}
+  @media(min-width:760px){.plan{grid-template-columns:1fr 1fr}}
+  @media(min-width:1024px){.plan{grid-template-columns:repeat(3,1fr)}}
+  .day{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:16px 18px}
+  .day .d{font-family:var(--mono);font-size:12.5px;letter-spacing:.1em;color:var(--accent);font-weight:600}
+  .day h3{margin:2px 0 8px;font-size:16.5px}
+  .day ul{margin:0;padding-left:18px;font-size:14px;color:var(--muted)}
+  .day li{margin-bottom:4px}
+  /* ---------- caveats / footer ---------- */
+  .caveats{background:var(--surface2);border-radius:var(--radius);padding:20px 22px}
+  .caveats ul{margin:0;padding-left:20px;font-size:14.5px}
+  .caveats li{margin-bottom:8px}
+  footer{margin-top:56px;border-top:1px solid var(--line);padding-top:18px;font-size:13.5px;color:var(--muted)}
+  footer p{margin:0 0 6px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="hero">
+    <div class="dateline"><span>框架先行 · 全球来源（非中文）</span><span>资料核验于 2026-11-17</span><span>首批精读 12 篇</span></div>
+    <h1>AI 营销 Agent：先建框架，再读文章</h1>
+    <p class="sub">这个领域其实有两套不同的自动化，混在一起谈是大多数 0→1 计划走偏的起点。先把它们分开，再看平台、架构与度量，最后按顺序读完 12 篇精读。</p>
+    <div class="thesis">
+      <div class="t"><b>平台自动化 ≠ Agent 自动化</b><p>Meta Advantage+、Google Performance Max / AI Max、TikTok Smart+ 已经在各自的围墙花园里做竞价、扩量和创意组装。你的系统不取代它，而是<b style="display:inline;font-size:inherit">在它之上</b>感知、决策、通过 API 执行——并给它装上护栏。</p></div>
+      <div class="t rust"><b>创意就是定向</b><p>自 Meta Andromeda（2024 年 12 月）起，检索引擎直接读广告本身来决定它能触达谁。0→1 的第一笔投入应该是<b style="display:inline;font-size:inherit">创意多样性 + 干净的转化信号</b>，而不是更精细的人工定向。</p></div>
+      <div class="t navy"><span class="big">&lt; 5%</span><b>真正的全自动还很稀有</b><p>据 Gartner（经 Adweek 2026 年 10 月报道），2025 年高度自动化的营销用例不足 5%，预计 2028 年到 15%。正确路径是分级爬梯：审批门逐步收窄，而不是一步到位。</p></div>
+    </div>
+  </header>
+
+  <div class="layout">
+    <nav class="toc" aria-label="目录">
+      <div class="toc-h">目录</div>
+      <a href="#map">01 全景地图</a>
+      <a href="#platforms">02 平台与 API</a>
+      <a href="#arch">03 系统架构</a>
+      <a href="#ladder">04 自主阶梯与搭建顺序</a>
+      <a href="#concepts">05 核心概念</a>
+      <a href="#data">06 数据锚点：增量基准</a>
+      <a href="#eco">07 工具与生态</a>
+      <a href="#reading">08 首批精读 · 12 篇</a>
+      <a href="#plan">09 六天阅读计划</a>
+      <a href="#caveats">10 未决问题</a>
+    </nav>
+
+    <main>
+      <!-- 01 MAP -->
+      <section id="map">
+        <h2><span class="no">01</span>全景地图：营销 Agent 到底覆盖什么</h2>
+        <p class="lede">六个职能。每一格都分三层看：Agent 做什么、平台已经替你做了什么、以及你仍然必须自己建的部分——第三列才是你的工作量所在。</p>
+        <div class="fmap">
+          <div class="fn"><h3>创意生成</h3><dl>
+            <dt>Agent 做</dt><dd>从 brief 出发产出角度 / 钩子、文案、图视频变体、本地化与尺寸适配；生成必须以产品数据库为依据，而非模型自由发挥。</dd>
+            <dt>平台已做</dt><dd>Meta Advantage+ Creative、Google AI Max 文案定制、TikTok Symphony（Smart+ 内）都能生成、扩展、混剪素材。</dd>
+            <dt>你仍要建</dt><dd>品牌事实源（规范 + 主张数据库）、生成提示词、多层审核、疲劳检测、变体→原型（archetype）的追踪。</dd></dl></div>
+          <div class="fn"><h3>媒体购买 / 竞价</h3><dl>
+            <dt>Agent 做</dt><dd>设定与调整预算、出价、上限；暂停 / 关停 / 放量广告组；决定广告系列结构。</dd>
+            <dt>平台已做</dt><dd>Smart Bidding（Google）、Advantage+ 预算与版位优化、Smart+ CBO——都在黑盒内部完成。</dd>
+            <dt>你仍要建</dt><dd>决策策略：<em>何时</em>干预、用什么阈值，以及 LLM 无权突破的硬上限。</dd></dl></div>
+          <div class="fn"><h3>预算分配</h3><dl>
+            <dt>Agent 做</dt><dd>按边际增量回报在跨渠道 / 跨系列之间再分配预算。</dd>
+            <dt>平台已做</dt><dd>只有系列内部的分配（如 PMax 在 Google 各渠道间分配）。</dd>
+            <dt>你仍要建</dt><dd>以增量校正后的回报（而非后台 ROAS）为输入的跨渠道分配器，加上节奏控制与日 / 周上限。</dd></dl></div>
+          <div class="fn"><h3>受众 / 分群</h3><dl>
+            <dt>Agent 做</dt><dd>用一方数据、相似人群、意图信号构建与刷新分群；排除已有客户。</dd>
+            <dt>平台已做</dt><dd>Advantage+ Audience 把你的输入当作<em>建议</em>并自动扩展；AI Max 无关键词匹配；Smart+ 自动定向。</dd>
+            <dt>你仍要建</dt><dd>以数据形式定义的受众、排除 / 抑制逻辑、合规的身份方案（不依赖用户级追踪）。</dd></dl></div>
+          <div class="fn"><h3>度量 / 增量</h3><dl>
+            <dt>Agent 做</dt><dd>地理留出（geo holdout）、增量提升研究、MMM；把结果转成每渠道的校正系数。</dd>
+            <dt>平台已做</dt><dd>平台自家的 lift 研究（Meta / Google Conversion Lift，用户级最低约 $5,000）——等于平台给自己判卷。</dd>
+            <dt>你仍要建</dt><dd>独立度量：以自有销售 / CRM 为事实源，GeoLift、Meridian GeoX，以及用实验校准的 MMM。</dd></dl></div>
+          <div class="fn"><h3>报告 / 洞察</h3><dl>
+            <dt>Agent 做</dt><dd>自然语言的业绩叙述、异常检测、根因分析、下一步行动建议。</dd>
+            <dt>平台已做</dt><dd>Ads Manager / Google Ads 报表；PMax 的渠道级报表（2025 年补齐）。</dd>
+            <dt>你仍要建</dt><dd>统一的跨渠道事实表（花费、归因收入 vs 增量收入、毛利），以及每一次 Agent 动作的审计日志。</dd></dl></div>
+        </div>
+        <div class="note"><b>两个容易浪费工夫的误区。</b>其一，「Agentic」≠「自动化」：一条「CPA &gt; $X 就暂停」的规则是自动化；Agent 是在非结构化状态（创意、市场、漏斗）上推理、并通过工具在多个动作中做选择。其二，市场上有两种 Agent：替广告主在围墙花园里买量的（你要建的这种），和买卖双方之间的 Agent 对 Agent 交易（AdCP / AAMP，目前以 CTV 和媒体方为主，还很早期）。</div>
+      </section>
+
+      <!-- 02 PLATFORMS -->
+      <section id="platforms">
+        <h2><span class="no">02</span>三大平台今天自动化到什么程度</h2>
+        <p class="lede">先搞清楚每家平台「替你决定了什么、还留给你什么」，才知道你的系统该写哪一层。平台给出的效果数字均为其官方口径，当方向看，不要当承诺。</p>
+        <div class="plats">
+          <div class="plat">
+            <div class="pname">Meta</div><div class="pprod">Advantage+ · Andromeda · GEM</div>
+            <h4>它决定</h4><p>谁有资格看到广告（检索短名单）、排序与竞价、预算、版位、创意变体。</p>
+            <h4>你保留</h4><p>目标、预算 / 上限、创意素材、品牌控制、受众<em>建议</em>、排除项。</p>
+            <h4>关键事实</h4><ul>
+              <li>Andromeda（2024-12-02，Engineering at Meta）：检索把「数千万候选」收窄到「几千」，召回 +6%、广告质量 +8%（选定人群），模型容量 10,000×，跑在 NVIDIA Grace Hopper 与 MTIA 上。</li>
+              <li>GEM（2025-11-10 索引）：LLM 级教师模型蒸馏进排序器；Meta 称 2025 Q2 Instagram 转化 +5%、Facebook Feed +3%。</li>
+              <li>Meta（2025 年 4 月）：「创意多样化是找到最相关受众的最佳杠杆」——创意即定向。Advantage+ 已是新建销售 / 线索 / 应用系列的默认。</li></ul>
+          </div>
+          <div class="plat">
+            <div class="pname">Google</div><div class="pprod">Performance Max · AI Max · Smart Bidding</div>
+            <h4>它决定</h4><p>渠道、受众、素材组合、出价、落地页（最终到达网址扩展）、关键词之外的查询匹配。</p>
+            <h4>你保留</h4><p>预算、目标（tCPA / tROAS）、素材组与受众信号、品牌包含 / 排除、否定词、网址控制、意向地域。</p>
+            <h4>关键事实</h4><ul>
+              <li>PMax：一个系列跑遍 Search、YouTube、Display、Discover、Gmail、Maps，素材按素材组组织，Google AI 实时组装广告。</li>
+              <li>AI Max（2025-05-06）：搜索词匹配（广泛 + 无关键词）、文案定制、最终到达网址扩展；Google 称通常 +14% 转化、CPA / ROAS 相近，精确 / 词组为主的系列可达 +27%。</li>
+              <li>2025 年 PMax 补齐了渠道级报表与完整搜索词报表（4–8 月）。</li></ul>
+          </div>
+          <div class="plat">
+            <div class="pname">TikTok</div><div class="pprod">Smart+ · Symphony</div>
+            <h4>它决定</h4><p>定向、预算 / 出价（CBO）、版位、创意组合。</p>
+            <h4>你保留</h4><p>目标 / KPI、预算、地域与语言、素材；自 2025 年 10 月起自动化可<b style="color:var(--ink)">按模块开关</b>（定向 / 预算 / 创意 / 版位分别切换）。</p>
+            <h4>关键事实</h4><ul>
+              <li>Smart+（Smart Performance Campaign 的后继，2024 年 4 月起）：单系列最多 30 个广告组、每组 30 个素材组、每素材组 50 条创意。</li>
+              <li>Smart+ Catalog Ads 在封闭测试中 CPA −36%（TikTok 内部数据，2025）。</li>
+              <li>Symphony Automation：推荐创意 + 自动增强，含 50+ 语言配音。</li></ul>
+          </div>
+        </div>
+        <p class="small" style="margin-top:14px">新兴形态：Meta 的 Muse for Small Business（2026-09-29，索引）、Google 的 Ads Advisor / Analytics Advisor（2025-11-12，索引）、Amazon Ads Agent（2025 年 11 月，索引）都是平台内的对话式助手——能分析账户、起草系列、建议修改，但 Meta 的规则是「未经你批准，不发布、不发送、不花钱」。它们是审批交互的参考，不是可依赖的基础设施。</p>
+
+        <div class="api">
+          <h3>执行层：你真正要编程对接的 API</h3>
+          <p class="small" style="margin-top:-4px">三家都免费（有广告账户即可），鉴权均为 OAuth 2.0（Google 另需开发者令牌）。版本号迭代很快，动手前务必回官方文档复核。</p>
+          <div class="api-grid">
+            <div class="a"><b>Meta Marketing API</b><p>系列 / 广告组 / 广告的增删改查、自定义受众、Ads Insights、Conversions API（服务端事件），对象层级与 Ads Manager 一致。Graph API，约每 4 个月一个版本（v26.0 于 2026-07-29 发布，据二手指南）；权限 ads_read / ads_management；服务端用系统用户令牌。Meta 已于 2026 年 7 月向所有开发者开放 Ads MCP server（索引）。</p></div>
+            <div class="a"><b>Google Ads API</b><p>系列、素材组、预算、出价、GAQL 报表；PMax 通过原子化批量 Mutate 创建（预算 + 系列 + 素材组 + 素材）；AI Max 设置自 API v21 起可用。不开放的：Smart Bidding 内部逻辑、竞价数据、竞品出价。</p></div>
+            <div class="a"><b>TikTok Marketing API</b><p>系列 / 广告组 / 广告管理、Spark Ads、视频上传、受众同步。需要应用审核与企业验证，有速率限制。</p></div>
+          </div>
+          <p style="margin:14px 0 0;font-size:14.5px"><b>信号管道（不可谈判）：</b>服务端转化事件（Meta Conversions API、Google 增强型转化 / 离线转化导入、TikTok Events API）同时喂给平台和你自己的数仓。平台的优化质量上限，就是你回传的转化信号质量；而你的度量必须用自有销售 / CRM 数据，绝不能只信平台转化数。</p>
+          <p class="small" style="margin:8px 0 0">协议层（了解即可）：MCP（Anthropic，2024 年 11 月，现属 Linux Foundation）管 Agent↔工具；A2A（Google，2025 年 4 月）管 Agent↔Agent；AdCP（2025 年 10 月，AgenticAdvertising.org）管 Agent 买量任务；IAB Tech Lab 的 AAMP / ARTF 管程序化实时竞价。0→1 先用原生 API + MCP，AdCP / AAMP 是要盯的互操作赌注，不是起点（见精读 #9）。</p>
+        </div>
+      </section>
+
+      <!-- 03 ARCH -->
+      <section id="arch">
+        <h2><span class="no">03</span>一套自动投放系统的架构</h2>
+        <p class="lede">四层加一圈护栏。最重要的一条分工原则：<b>花钱的决定权在代码里，不在 LLM 里</b>——上限、计数、发布由确定性代码把关，LLM 只在边界内做语义工作（排序、起草、解读）。</p>
+        <div class="arch">
+          <div class="layer"><div class="lname">DATA LAYER · 数据层</div><h3>事实与信号</h3><p>一方数据：CRM / 订单、产品目录 + 主张数据库、品牌资产。平台数据：Insights / GAQL / TikTok 报表（花费与投放）。信号回传：CAPI / 增强型转化 / Events API。数仓：统一的花费 × 收入 × 毛利，粒度到地域 × 天。</p></div>
+          <div class="arrow">▼</div>
+          <div class="layer"><div class="lname">DECISION LAYER · 决策层</div><h3>Agent + 确定性策略</h3><p>感知：流式 / 批量指标、创意疲劳、异常、节奏。推理：LLM Agent（分析师 → 策略师）+ ML 模型（饱和曲线、MMM 边际 ROI、创意评分）。策略层是<b>代码而非 LLM</b>：预算上限、关停 / 放量规则、品牌与合规检查、审批路由。</p></div>
+          <div class="arrow">▼</div>
+          <div class="layer"><div class="lname">EXECUTION LAYER · 执行层</div><h3>工具化的 API 调用</h3><p>对 Meta / Google / TikTok API（及 MCP server）的工具封装；变更必须幂等、可 dry-run 预演；每一次调用都留日志。</p></div>
+          <div class="arrow">▼</div>
+          <div class="layer"><div class="lname">FEEDBACK / EVAL LOOP · 反馈与评估环</div><h3>两个回路</h3><p>短回路：平台指标 → 再分配 / 刷新创意。长回路：地理留出 + MMM → 校正系数 → 反哺分配器先验、创意策略与预算切分。评估：离线（历史回放、黄金集）+ 在线（影子模式、留出）；每一个决策都要有可追溯的 trace（如 LangSmith）。</p></div>
+        </div>
+        <div class="guard"><b>护栏环绕所有层：</b>硬上限、允许清单、主张核验、人工审批门。预算护栏全部写在 LLM 之外的代码里：账户 / 日硬上限、单次变更上限（如预算 ±15% / 天）、最低 ROAS / 最高 CPA 触发自动暂停、关停规则（如 3× 目标 CPA 且零转化）、节奏告警、全局急停开关。每次变更记录操作者、理由与变更前后状态——2025 年 11 月曾有 Meta 系列在首小时花掉日预算 150%+ 的报道，这正是第一个要防的失败模式。</div>
+      </section>
+
+      <!-- 04 LADDER -->
+      <section id="ladder">
+        <h2><span class="no">04</span>自主阶梯：一次只上一级</h2>
+        <p class="lede">每一级都有明确的「毕业标准」。没有通过评估，就不要放宽权限——这是整份框架里最可执行的一页。</p>
+        <div class="ladder">
+          <div class="rung"><div class="lv">L0</div><div><h3>手动 · 只读</h3><p>Agent 什么都不做，只有看板和告警；全部决策与执行由人完成。</p><p class="exit"><b>毕业标准：</b>数据层可靠；一个渠道以只读方式经 API 跑通。</p></div></div>
+          <div class="rung"><div class="lv">L1</div><div><h3>辅助 · 只建议</h3><p>Agent 起草动作并附理由，不做任何写入；人在应用内逐条批准 / 驳回。</p><p class="exit"><b>毕业标准：</b>建议被接受或被正确驳回的比例 &gt; 90%；评估全绿。</p></div></div>
+          <div class="rung"><div class="lv">L2</div><div><h3>半自动 · 有界写入</h3><p>Agent 在上限内执行预批准的动作类（如 CPA &gt; 3× 目标自动暂停、每日预算转移 ≤ 15%）；人每天复查队列，批准新创意与预算上调。</p><p class="exit"><b>毕业标准：</b>连续 4–8 周无护栏突破；影子模式结果与人工一致。</p></div></div>
+          <div class="rung"><div class="lv">L3</div><div><h3>自动 · 受监督</h3><p>完整回路，包括创意生成与上线，全部在预算包络与品牌锁定之内；人设定目标与上限、每周复盘、处理异常。</p><p class="exit"><b>毕业标准：</b>回报经增量验证；事故预案实测过。</p></div></div>
+          <div class="rung"><div class="lv">L4</div><div><h3>全自动 · 愿景</h3><p>在包络内无限期运行，只上报异常；人只做治理：目标、上限、品牌事实源、审计。</p><p class="exit"><b>现状：</b>今天高度自动化的营销用例不足 5%（Gartner，经 Adweek 2026 年 10 月报道）。</p></div></div>
+        </div>
+        <h3>0→1 推荐搭建顺序</h3>
+        <div class="steps">
+          <div class="step"><b>只读数据 + 报告 Agent</b>——先在 Meta 上把数拉通、把报表做对。</div>
+          <div class="step"><b>确定性规则</b>——暂停 / 关停 / 节奏，全部经人工批准执行。</div>
+          <div class="step"><b>创意生成流水线</b>——配齐五层审核（见概念区与精读 #12）。</div>
+          <div class="step"><b>预算分配器</b>——以增量校正后的回报为输入，而不是后台 ROAS。</div>
+          <div class="step"><b>扩渠道</b>——再接 Google、TikTok，收拢到一个渠道抽象层后面。</div>
+          <div class="step"><b>逐级放权</b>——按阶梯一次放宽一个动作类。不要一上来就做能花钱的自由多 Agent 群。</div>
+        </div>
+      </section>
+
+      <!-- 05 CONCEPTS -->
+      <section id="concepts">
+        <h2><span class="no">05</span>搭建者必须吃透的概念</h2>
+        <p class="lede">九个概念，按「会在哪一步咬你」排序。前三个决定架构，中间三个决定安全，最后三个决定你算出来的数字能不能信。</p>
+        <div class="concepts">
+          <div class="concept"><h3>工作流 vs Agent</h3><p>Anthropic（2024 年 12 月）的定义是这个领域的标准词汇：<b>工作流</b> = LLM 与工具走预先写好的代码路径；<b>Agent</b> = LLM 动态决定自己的流程与工具使用。五种可组合的工作流模式——提示链、路由、并行化、编排者-执行者、评估者-优化者——覆盖了大多数真实需求。原则：用能通过评估的最简模式；只有当路径无法预先写死、但进展可以验证时，才上真正的 Agent。先直接调 LLM API，框架（LangGraph、CrewAI 等）的抽象会遮住提示词、让调试变难。</p></div>
+          <div class="concept"><h3>工具使用 / Agent-计算机接口</h3><p>设计工具要像设计 UI 一样认真：命名精确、schema 严谨、文档清楚、输出结构化、带幂等键。再强调一次分工：LLM 永远不决定「要不要花钱」——上限、计数、发布由代码决定，LLM 只在边界内做语义判断。</p></div>
+          <div class="concept"><h3>评估即产品</h3><p>离线评估（黄金创意集、历史回放）、在线评估（影子模式：Agent 提议、人执行、再对比）、决策 trace，三者缺一不可。测不了 Agent 的决策质量，就不能安全地放宽它的权限。Anthropic 的三条原则：简单、透明（展示规划步骤）、工具设计用心。</p></div>
+          <div class="concept"><h3>幻觉 / 主张风险</h3><p>模型会一本正经地编造价格、规格、折扣和统计数字。对策是检索 grounding（只从产品 / 主张数据库生成）+ 主张核验层（凡无法对事实源核验的一律拒绝）+ 抽样批次审计。落地细节见精读 #12 的五层流水线。</p></div>
+          <div class="concept"><h3>品牌安全：两层</h3><p><b>适配性</b>（广告出现在哪里，平台有品牌安全模块）与<b>身份一致性</b>（创意是否还是这个品牌：语调、色值、字体、主张）。规模化之后真正的杀手不是灾难性错误，而是大量「略微跑偏」的变体在一个季度内稀释品牌。新兴解法是 <span class="src">brand.json</span>——品牌自有域名上的机器可读品牌事实文件（AdCP 3.0），见精读 #11。</p></div>
+          <div class="concept"><h3>预算护栏</h3><p>确定性、在代码里、在 LLM 之外：账户 / 日硬上限、单次变更上限、ROAS 下限 / CPA 上限触发自动暂停、关停规则、节奏告警、全局急停。每次变更记录操作者、理由、前后状态。超支失控（见 03 节的 150% 案例）是第一个要设计防御的失败模式。</p></div>
+          <div class="concept wide"><h3>归因 vs 增量 vs MMM：三角互证，不要只选一个</h3>
+            <ul>
+              <li><b>归因</b>（末次点击 / MTA）：哪个触点「认领」了转化。适合日常运营；系统性高估再营销与品牌词搜索；受隐私变化侵蚀（仅浏览器追踪会漏掉 30–40% 的转化）。</li>
+              <li><b>增量</b>（地理留出、人群留出、平台 lift）：这笔花费<em>导致</em>了什么，相对于反事实。预算决策的金标准；慢（数周）、粗（渠道级）。</li>
+              <li><b>MMM</b>（Meridian、Robyn）：用饱和与衰减（adstock）回归销售与花费的关系；常开、跨渠道、隐私耐久（聚合数据）。但本质是相关性，必须用实验结果作先验来校准。</li>
+            </ul>
+            <p style="margin-top:8px">运行规则：日常用归因，每季度对主要渠道做地理实验（产出 = 对平台 ROAS 的一个校正系数），跨渠道分配用 MMM——并且要复测，因为平台一变，系数就会漂移。</p></div>
+          <div class="concept"><h3>创意即定向，疲劳是时钟</h3><p>Andromeda 之下，多样化创意（不同角度、钩子、形式、人群）是触达的主要杠杆；近似重复的创意会被算作同一条。创意死得很快——一项 2026 年对 290 万条 Meta 广告的分析显示中位寿命仅 3 天——所以系统需要持续刷新节奏，而不是一次性产出一批。</p></div>
+          <div class="concept"><h3>学习期 / 信号质量</h3><p>平台每个广告组每周约需 50 个转化事件才能退出学习期，改动会重置学习。你的 Agent 必须批量提交变更、尊重学习窗口、不来回折腾设置。干净、去重的服务端转化信号，比任何出价技巧都重要。</p></div>
+        </div>
+      </section>
+
+      <!-- 06 DATA -->
+      <section id="data">
+        <h2><span class="no">06</span>数据锚点：平台 ROAS 有多不可信</h2>
+        <p class="lede">Stella 基于 225 个地理实验（DTC 品牌，2024 年 8 月–2025 年 12 月）发布的增量 ROAS（iROAS）基准。这是目前少有的公开跨渠道对照：先记住量级，再谈优化。</p>
+        <div class="chartcard">
+          <h3>各渠道增量 ROAS 中位水平（iROAS，×）</h3>
+          <div class="chart-scroll">
+          <svg class="chart" viewBox="0 0 720 300" role="img" aria-label="条形图：Performance Max 2.98 倍，Meta 2.92 倍，全部渠道中位数 2.31 倍（四分位距 1.36 到 3.24），TikTok 0.94 倍，品牌词搜索 0.70 倍">
+            <!-- gridlines: plot x 170..670 = 0..3.5, 142.857/unit -->
+            <line class="grid" x1="170" y1="18" x2="170" y2="262"/>
+            <line class="grid" x1="313" y1="18" x2="313" y2="262"/>
+            <line class="grid" x1="456" y1="18" x2="456" y2="262"/>
+            <line class="grid" x1="599" y1="18" x2="599" y2="262"/>
+            <text class="muted-t" x="170" y="282" font-size="12" text-anchor="middle">0×</text>
+            <text class="muted-t" x="313" y="282" font-size="12" text-anchor="middle">1×</text>
+            <text class="muted-t" x="456" y="282" font-size="12" text-anchor="middle">2×</text>
+            <text class="muted-t" x="599" y="282" font-size="12" text-anchor="middle">3×</text>
+            <!-- PMax 2.98 -->
+            <text x="162" y="49" font-size="13.5" text-anchor="end">Performance Max</text>
+            <rect class="bar" x="170" y="28" width="426" height="28" rx="3"/>
+            <text x="604" y="49" font-size="13.5" font-weight="600">2.98×</text>
+            <!-- Meta 2.92 -->
+            <text x="162" y="101" font-size="13.5" text-anchor="end">Meta</text>
+            <rect class="bar" x="170" y="80" width="417" height="28" rx="3"/>
+            <text x="595" y="101" font-size="13.5" font-weight="600">2.92×</text>
+            <!-- Median 2.31, IQR 1.36-3.24 -->
+            <text x="162" y="153" font-size="13.5" text-anchor="end">全部渠道中位数</text>
+            <rect class="bar" x="170" y="132" width="330" height="28" rx="3"/>
+            <line class="iqr" x1="364" y1="146" x2="633" y2="146"/>
+            <line class="iqr" x1="364" y1="138" x2="364" y2="154"/>
+            <line class="iqr" x1="633" y1="138" x2="633" y2="154"/>
+            <text x="508" y="153" font-size="13.5" font-weight="600">2.31×</text>
+            <!-- TikTok 0.94 -->
+            <text x="162" y="205" font-size="13.5" text-anchor="end">TikTok</text>
+            <rect class="bar dim" x="170" y="184" width="134" height="28" rx="3"/>
+            <text x="312" y="205" font-size="13.5" font-weight="600">0.94×</text>
+            <!-- Branded search 0.70 -->
+            <text x="162" y="257" font-size="13.5" text-anchor="end">品牌词搜索</text>
+            <rect class="bar dim" x="170" y="236" width="100" height="28" rx="3"/>
+            <text x="278" y="257" font-size="13.5" font-weight="600">0.70×</text>
+          </svg>
+          </div>
+          <p class="small" style="margin:6px 0 0">中位数上的金色须线为四分位距（IQR 1.36×–3.24×）。低于 1× 意味着每花 1 元、增量收入不到 1 元（未计毛利）。来源：Stella 增量测试指南（2026 年 6 月更新），样本为自选的 DTC 品牌，结果不可直接外推。另注意方向并非单边：Stella 的 46 个反向留出实验中，Meta 的实际增量平均比其报告值还高 21%——平台数字是两个方向都可能错。配合阅读：Haus 对 640 个 Meta 测试的分析也发现 Advantage+ 在测试中期看似好 9%、到结束时反而差 12%（见精读 #7）。</p>
+        </div>
+      </section>
+
+      <!-- 07 ECO -->
+      <section id="eco">
+        <h2><span class="no">07</span>工具与生态速览</h2>
+        <p class="lede">这个领域变化快、厂商自报数字多。下表是「原型地图」而非推荐清单：融资与效果数字均为媒体 / 厂商口径，未经独立核实。</p>
+        <div class="eco">
+          <div class="e"><b>Agent 买量平台</b><p>Apostra（前 Scope3，AdCP 发起方，跨 Meta / Google / Pinterest / Reddit / Spotify / ChatGPT 买量）、PubMatic AgenticOS（2026 年 1 月）、Magnite 买方 Agent、The Trade Desk 对话式界面、Kargo Project Kera。目前以 CTV / 程序化为主，金额小、有人盯着。</p></div>
+          <div class="e"><b>跨渠道 AI 广告管理</b><p>Synter Media（MCP server，覆盖 27 个平台）、MINT.ai、Abijany（经官方 API 操作 Meta / Google / TikTok / YouTube，主打护栏）。与你要建的系统最同构——值得研究的是它们的护栏与审批交互。</p></div>
+          <div class="e"><b>创意生成 Agent</b><p>Runway Ads（视频变体本地化）、Celtra（创意自动化 + 治理，brand.json 共同作者）、VIMDRIVE、AdCreative.ai、Jasper、Writer。差异化已经不在生成速度，而在治理与主张核验。</p></div>
+          <div class="e"><b>度量 / 增量</b><p>Haus、Stella / Measured、Northbeam，以及开源的 Google Meridian + GeoX、Meta GeoLift（2021）、Meta Robyn（开源 MMM）。GeoLift 与 Meridian 免费，小团队就能跑——这是你的分配器要依赖的度量栈。</p></div>
+          <div class="e"><b>Agent 框架（开源）</b><p>LangGraph（有状态图，适合长时运行的广告回路）、CrewAI（角色制：分析师 / 策略师 / 执行者）、AutoGen、MCP（工具标准），以及 n8n / Temporal（可靠执行与调度——动钱的路径放在确定性工作流工具里，不要放进 LLM 循环）。观测配 LangSmith 一类 trace 工具。</p></div>
+          <div class="e"><b>标准组织</b><p>AgenticAdvertising.org / AdCP（brand.json、AdCP 3.0）、IAB Tech Lab AAMP / ARTF、Prebid.org（参考销售 Agent）。Agent 对 Agent 买量正在这里标准化：盯着看，但围墙花园买量先别押在上面。</p></div>
+        </div>
+      </section>
+
+      <!-- 08 READING -->
+      <section id="reading">
+        <h2><span class="no">08</span>首批精读 · 12 篇</h2>
+        <p class="lede">全部为英文（及非中文）来源，2024–2026 年为主，含一篇奠基之作；每篇链接均于 2026-11-17 实际打开核验。平台自家的效果数字已在文中标注口径。点分类可筛选，读完一篇可标记——标记只在本次打开期间有效。</p>
+        <div class="filters" role="group" aria-label="按类别筛选">
+          <button data-f="all" aria-pressed="true">全部 12</button>
+          <button data-f="base" aria-pressed="false">基础</button>
+          <button data-f="plat" aria-pressed="false">平台深挖</button>
+          <button data-f="arch" aria-pressed="false">系统架构</button>
+          <button data-f="measure" aria-pressed="false">度量 / 增量</button>
+          <button data-f="gov" aria-pressed="false">治理与前沿</button>
+        </div>
+        <p class="readcount" id="readcount">已读 0 / 12</p>
+        <div class="articles" id="articles">
+
+          <article class="art" data-cat="base"><div class="top"><div class="num">01</div><div>
+            <h3><a href="https://www.anthropic.com/engineering/building-effective-agents" target="_blank" rel="noopener">Building effective AI agents</a><span class="tag">基础</span></h3>
+            <div class="meta">Anthropic · 2024-12-19</div></div></div>
+            <p class="sum">Anthropic 划出了这个领域的标准分界：工作流（LLM 与工具走预定义代码路径）与 Agent（LLM 动态主导自己的流程与工具使用），并给出五种可组合的工作流模式——提示链、路由、并行化、编排者-执行者、评估者-优化者——以及先直接调 API、保持简单与透明、认真设计工具、先评估再加复杂度的建议。（页面已注明 2024 年 12 月以来的工具生态变化，但模式本身未变。）</p>
+            <p class="why"><b>为什么读：</b>这是防止你第一天就去搭「自由奔跑的 Agent 群」的设计词汇表——广告系统的绝大部分应该是带闸门的工作流，真正的 Agent 只留给无法预写路径、但能验证进展的开放任务。</p>
+            <div class="row"><a class="open" href="https://www.anthropic.com/engineering/building-effective-agents" target="_blank" rel="noopener">打开原文 ↗</a><button class="mark" aria-pressed="false">标记已读</button></div></article>
+
+          <article class="art" data-cat="plat"><div class="top"><div class="num">02</div><div>
+            <h3><a href="https://engineering.fb.com/2024/12/02/production-engineering/meta-andromeda-advantage-automation-next-gen-personalized-ads-retrieval-engine/" target="_blank" rel="noopener">Meta Andromeda: Supercharging Advantage+ automation with the next-gen personalized ads retrieval engine</a><span class="tag plat">平台 · Meta</span></h3>
+            <div class="meta">Engineering at Meta · 2024-12-02</div></div></div>
+            <p class="sum">Meta 官方工程解读 Andromeda：检索是广告投放的第一阶段，把数千万候选收窄到几千再进入排序；跑在 NVIDIA Grace Hopper（及 MTIA）上的定制深度网络带来 10,000× 模型容量、检索召回 +6%、选定人群广告质量 +8%，分层索引就是为吸收 Advantage+ 与生成式 AI 带来的创意量爆炸而建的。</p>
+            <p class="why"><b>为什么读：</b>它解释了「为什么创意现在是定向输入」——决定谁能看到广告的是检索层，不是你的受众设置；你的系统必须持续产出真正不同的多样化创意。</p>
+            <div class="row"><a class="open" href="https://engineering.fb.com/2024/12/02/production-engineering/meta-andromeda-advantage-automation-next-gen-personalized-ads-retrieval-engine/" target="_blank" rel="noopener">打开原文 ↗</a><button class="mark" aria-pressed="false">标记已读</button></div></article>
+
+          <article class="art" data-cat="plat"><div class="top"><div class="num">03</div><div>
+            <h3><a href="https://blog.google/products/ads-commerce/google-ai-max-for-search-campaigns/" target="_blank" rel="noopener">Introducing AI Max for Search campaigns</a><span class="tag plat">平台 · Google</span></h3>
+            <div class="meta">Google（The Keyword）· Brian Burdick · 2025-05-06</div></div></div>
+            <p class="sum">Google 把 AI Max 定义为 Search 系列内的一键功能套件：搜索词匹配（广泛 + 无关键词）、文案定制（自动生成标题 / 描述）、最终到达网址扩展，配套品牌 / 地域控制与更丰富的搜索词报表。Google 称通常 +14% 转化、CPA / ROAS 相近，精确 / 词组为主的系列 +27%；发布案例含 L'Oréal（转化率 2×、单转化成本 −31%）与 MyConnect（线索 +16%）——均为 Google 口径。</p>
+            <p class="why"><b>为什么读：</b>这是 Google 一侧「交易条件」的权威表述：关键词清单的重要性下降，落地页 / 素材质量与意图覆盖上升；它同时划清了你的系统还能以编程方式控制什么、什么已被 Google 接管。</p>
+            <div class="row"><a class="open" href="https://blog.google/products/ads-commerce/google-ai-max-for-search-campaigns/" target="_blank" rel="noopener">打开原文 ↗</a><button class="mark" aria-pressed="false">标记已读</button></div></article>
+
+          <article class="art" data-cat="plat"><div class="top"><div class="num">04</div><div>
+            <h3><a href="https://ads.tiktok.com/business/en-GB/blog/smart-plus-ai-performance-solution" target="_blank" rel="noopener">Smart+: AI-Powered Solution To Maximise Ad Campaign Results</a><span class="tag plat">平台 · TikTok</span></h3>
+            <div class="meta">TikTok for Business · 2026-05-13（2026-10-20 更新）</div></div></div>
+            <p class="sum">TikTok 官方 Smart+ 总览：自动化覆盖定向、预算 / 出价（CBO）、版位与创意（流量、应用、线索、销售），现已可按模块分别开关而非全有全无；上限为 30 广告组 / 30 素材组 / 每素材组 50 创意。Smart+ Catalog Ads 称封闭测试 CPA −36%（TikTok 内部数据，2025）；Symphony Automation 含推荐创意与自动增强（含 50+ 语言配音）。</p>
+            <p class="why"><b>为什么读：</b>TikTok 是多渠道搭建的第三条腿，也是唯一往「更细粒度控制」回摆的平台——它把自动化做成逐模块开关，正是你自己的系统该用的暴露方式，而不是一个总开关。</p>
+            <div class="row"><a class="open" href="https://ads.tiktok.com/business/en-GB/blog/smart-plus-ai-performance-solution" target="_blank" rel="noopener">打开原文 ↗</a><button class="mark" aria-pressed="false">标记已读</button></div></article>
+
+          <article class="art" data-cat="arch"><div class="top"><div class="num">05</div><div>
+            <h3><a href="https://medium.com/@brian-curry-research/building-an-agentic-martech-stack-a-technical-deep-dive-07d51931336a" target="_blank" rel="noopener">Building an Agentic MarTech Stack: A Technical Deep Dive</a><span class="tag">架构</span></h3>
+            <div class="meta">Medium · Brian James Curry · 2026 年 2 月</div></div></div>
+            <p class="sum">一份全栈蓝图：编排层（LangGraph / CrewAI）、Agent 层（系列优化、内容生成、受众智能、预算分配、监控、A/B 测试）、推理层（LLM + 向量检索 + ML 模型）、感知层（Kafka / Flink / Redis）、动作层（Google / Meta / TikTok / 邮件 / CMS / CRM）与可观测性，含 LangGraph 代码、感知-推理-行动回路，以及分阶段上线（从影响最大、风险最低的 Agent 开始，6 周内 10% → 50% → 100% 预算）。<b>注意：</b>文中「CPA 降低 30–40%」只归因于未具名的早期采用者，无来源，只能当示意看。</p>
+            <p class="why"><b>为什么读：</b>这是清单里最接近「可照着建」的参考架构——学它的分层与上线纪律，别学它没出处的效果数字。</p>
+            <div class="row"><a class="open" href="https://medium.com/@brian-curry-research/building-an-agentic-martech-stack-a-technical-deep-dive-07d51931336a" target="_blank" rel="noopener">打开原文 ↗</a><button class="mark" aria-pressed="false">标记已读</button></div></article>
+
+          <article class="art" data-cat="measure"><div class="top"><div class="num">06</div><div>
+            <h3><a href="https://searchengineland.com/google-meridian-ppc-guide-494563" target="_blank" rel="noopener">The PPC marketer's guide to Google's Meridian</a><span class="tag measure">度量 · MMM</span></h3>
+            <div class="meta">Search Engine Land · 2026-10-09</div></div></div>
+            <p class="sum">Meridian（2024 年推出，2025 年初向所有人开放）是 Python 写的、完全贝叶斯的开源 MMM：地域级分层建模、用 Google 搜索量作自然需求的控制变量、时变截距，以及关键机制——用增量实验结果校准先验。指南给出五步落地法（数据准备、含 adstock / 饱和的设定、MCMC 训练与诊断、校准、情景优化），并对数据洁净度与技术门槛有诚实的提醒。</p>
+            <p class="why"><b>为什么读：</b>MMM 是分配器的「长回路大脑」——这是用因果、隐私耐久的数据（而非后台 ROAS）做预算决策的实操入口，而且代码可查，不是厂商黑盒。</p>
+            <div class="row"><a class="open" href="https://searchengineland.com/google-meridian-ppc-guide-494563" target="_blank" rel="noopener">打开原文 ↗</a><button class="mark" aria-pressed="false">标记已读</button></div></article>
+
+          <article class="art" data-cat="measure"><div class="top"><div class="num">07</div><div>
+            <h3><a href="https://orbitllm.com/resources/guides/incrementality-testing-geo-holdout" target="_blank" rel="noopener">Incrementality Testing on a Small Budget: The Geo Holdout Method (2026)</a><span class="tag measure">度量 · 增量</span></h3>
+            <div class="meta">Orbit · 2026-09-25</div></div></div>
+            <p class="sum">一份小预算、无厂商绑定的地理留出配方：用未投放市场构建合成对照，花钱<em>之前</em>先做功效分析（GeoLift 或 Meridian GeoX，都免费开源），留出 2–5 个市场至少一个购买周期加一段后期，产出一个<b>校正系数</b>（增量 ROAS ÷ 平台 ROAS）去修正此后所有平台数字。文中记录了常见陷阱——中途读结果（Haus：Advantage+ 中期看似好 9%、结束时差 12%）、泄漏、测试太短——以及新出现的低门槛（Google 用户级 lift 起价 $5,000）。</p>
+            <p class="why"><b>为什么读：</b>全清单最可操作的一篇度量文章：0→1 阶段用地域销售数据加免费工具就能跑，而它产出的系数正是跨渠道预算分配器需要的输入。</p>
+            <div class="row"><a class="open" href="https://orbitllm.com/resources/guides/incrementality-testing-geo-holdout" target="_blank" rel="noopener">打开原文 ↗</a><button class="mark" aria-pressed="false">标记已读</button></div></article>
+
+          <article class="art" data-cat="measure"><div class="top"><div class="num">08</div><div>
+            <h3><a href="https://www.stellaheystella.com/blog/how-to-test-for-incremental-impact-paid-media-incrementality-testing" target="_blank" rel="noopener">How to Test For Incremental Impact: Paid Media &amp; Incrementality Testing</a><span class="tag measure">度量 · 基准</span></h3>
+            <div class="meta">Stella · 2026 年 6 月更新</div></div></div>
+            <p class="sum">Stella 先定义增量收入（实际减反事实），再按可审计性给五种测试设计排序（地理留出、人群留出、平台 lift、switchback、实验校准 MMM），并发布其 225 个 DTC 测试基准（2024 年 8 月–2025 年 12 月）：iROAS 中位数 2.31×（IQR 1.36–3.24×）、品牌词搜索 0.70×、Meta 2.92×、Performance Max 2.98×、TikTok 0.94×。文中明确标注样本为自选，且平台 ROAS 两个方向都可能误导（46 个反向留出中 Meta 实际增量平均比报告高 21%）。</p>
+            <p class="why"><b>为什么读：</b>它同时给你决策框架（选哪种测试、看哪个 KPI——总收入、新客还是毛利，答案会变）和唯一公开的跨渠道 iROAS 基准，用来校验你的第一批测试结果。</p>
+            <div class="row"><a class="open" href="https://www.stellaheystella.com/blog/how-to-test-for-incremental-impact-paid-media-incrementality-testing" target="_blank" rel="noopener">打开原文 ↗</a><button class="mark" aria-pressed="false">标记已读</button></div></article>
+
+          <article class="art" data-cat="gov"><div class="top"><div class="num">09</div><div>
+            <h3><a href="https://www.adweek.com/media/a-guide-to-the-new-wide-world-of-agentic-advertising-and-commerce-protocols/" target="_blank" rel="noopener">A Guide to the New, Wide World of Agentic Advertising and Commerce Protocols</a><span class="tag gov">前沿 · 协议</span></h3>
+            <div class="meta">Adweek · 2026-05-28</div></div></div>
+            <p class="sum">一张协议栈地图：基础设施层（MCP，2024 年 11 月；A2A，Google，2025 年 4 月）、Agent 广告层（AdCP，2025 年 10 月，基于 MCP，由 AgenticAdvertising.org 主持；IAB Tech Lab 的 ARTF / AAMP 作为改造 RTB 的另一条路线；Agentic Audiences 做隐私安全的信号交换），以及 Agent 商业层（OpenAI / Stripe 的 ACP、Google UCP、AP2、Visa TAP、x402）。</p>
+            <p class="why"><b>为什么读：</b>写第一行集成代码之前，先弄清每个标准在哪一层——0→1 应落在原生 API / MCP 上，这篇告诉你该盯什么、什么还不能押上公司。</p>
+            <div class="row"><a class="open" href="https://www.adweek.com/media/a-guide-to-the-new-wide-world-of-agentic-advertising-and-commerce-protocols/" target="_blank" rel="noopener">打开原文 ↗</a><button class="mark" aria-pressed="false">标记已读</button></div></article>
+
+          <article class="art" data-cat="gov"><div class="top"><div class="num">10</div><div>
+            <h3><a href="https://www.adweek.com/programmatic/adweek-tech-advantage-ai-agents-are-increasingly-getting-their-hands-on-ad-dollars/" target="_blank" rel="noopener">AI Agents Are Increasingly Getting Their Hands on Ad Dollars</a><span class="tag gov">现状 · 案例</span></h3>
+            <div class="meta">Adweek（Tech Advantage）· 2026-10-06</div></div></div>
+            <p class="sum">一份落地的现状报告：Apostra 的 Agent 三个月经手约 $120 万买量；Rouge Care 称经 PubMatic AgenticOS 在 $25,000 的 CTV 花费上做到 5× ROAS；The Trade Desk、Magnite、Kargo、Runway 都在出 Agent 产品——但「没有人在规模化地做这件事」：高度自动化的部署在 2025 年营销用例中不足 5%（Gartner，2028 年预测 15%），悬而未决的是问责（「Agent 重分配了 $1,000 万、效果掉了，谁负责？」）与协议碎片化。</p>
+            <p class="why"><b>为什么读：</b>给 0→1 计划的解毒剂：真金白银在动，但金额小、有人监督——这正好验证了 04 节的分级阶梯，也提醒你从第一天就设计问责与审计轨迹。</p>
+            <div class="row"><a class="open" href="https://www.adweek.com/programmatic/adweek-tech-advantage-ai-agents-are-increasingly-getting-their-hands-on-ad-dollars/" target="_blank" rel="noopener">打开原文 ↗</a><button class="mark" aria-pressed="false">标记已读</button></div></article>
+
+          <article class="art" data-cat="gov"><div class="top"><div class="num">11</div><div>
+            <h3><a href="https://celtra.com/blog/agentic-advertising-without-governance-is-just-chaos-at-scale/" target="_blank" rel="noopener">Agentic Advertising Without Governance Is Just Chaos at Scale</a><span class="tag gov">治理 · 品牌</span></h3>
+            <div class="meta">Celtra · Pia Malovrh · 2026-04-21</div></div></div>
+            <p class="sum">Celtra 产品负责人指出瓶颈不在 AI 能力而在<b>治理缺口</b>：今天的创意 Agent 没有权威的品牌事实源，只能爬网站、猜颜色字体语调，然后靠人工事后 QA 吸收错误——恰好抵消了上 Agent 的意义。解法是 <span class="src">brand.json</span>：发布在品牌自有域名上的机器可读品牌身份文件（AdCP 3.0 的一部分），让治理在生成<em>之前</em>生效，人从「纠错者」变成「治理架构师」。</p>
+            <p class="why"><b>为什么读：</b>它把品牌安全从一份审核清单重构成了基础设施——对应到你的系统，就是一个生成时必须解析的机器可读品牌 / 主张源，而不是靠人逐条看变体。</p>
+            <div class="row"><a class="open" href="https://celtra.com/blog/agentic-advertising-without-governance-is-just-chaos-at-scale/" target="_blank" rel="noopener">打开原文 ↗</a><button class="mark" aria-pressed="false">标记已读</button></div></article>
+
+          <article class="art" data-cat="gov"><div class="top"><div class="num">12</div><div>
+            <h3><a href="https://vimdrive.com/blog/brand-safe-ai-creative-50000-variants/" target="_blank" rel="noopener">Brand-safe AI creative — what we learned from 50,000 ad variants</a><span class="tag gov">治理 · 实战拆解</span></h3>
+            <div class="meta">VIMDRIVE · 2026-04-08</div></div></div>
+            <p class="sum">一篇把创意 Agent（VIMC01）跑到量级后的实战拆解：品牌安全是一条五层流水线——(1) 确定性硬约束，(2) 微调过的品牌语调分类器，(3) 对产品数据库的主张核验，(4) 抽样批次审计（10–15%，分层抽样），(5) 在<b>原型层</b>做品牌锁定（50 个锁定原型覆盖 5,000 个变体）。反直觉发现：胜率要到约 1,000 个变体后才开始弯折、5,000 后趋平；审计层是「方向盘」，去掉它会产出单条看没问题、整体却同质化稀释的创意。</p>
+            <p class="why"><b>为什么读：</b>全清单最具体的护栏设计：生成周围到底要建什么、要测什么（各层的存活率）、以及到底值得产出多少量，它都给了答案。</p>
+            <div class="row"><a class="open" href="https://vimdrive.com/blog/brand-safe-ai-creative-50000-variants/" target="_blank" rel="noopener">打开原文 ↗</a><button class="mark" aria-pressed="false">标记已读</button></div></article>
+
+        </div>
+      </section>
+
+      <!-- 09 PLAN -->
+      <section id="plan">
+        <h2><span class="no">09</span>六天阅读计划 · 每天两篇</h2>
+        <p class="lede">顺序按框架依赖排：先词汇与平台机制，再架构，然后度量，最后治理与现实校验。每天读完，对照本页对应小节各写一句「这对我的系统意味着什么」。</p>
+        <div class="plan">
+          <div class="day"><div class="d">DAY 1 · 词汇与引擎</div><h3>Agent 是什么、Meta 怎么跑</h3><ul><li>#1 Anthropic《Building effective AI agents》</li><li>#2 Engineering at Meta《Andromeda》</li></ul></div>
+          <div class="day"><div class="d">DAY 2 · 平台全景</div><h3>Google 与 TikTok 的交易条件</h3><ul><li>#3 Google《Introducing AI Max》</li><li>#4 TikTok《Smart+》</li></ul></div>
+          <div class="day"><div class="d">DAY 3 · 架构</div><h3>系统怎么搭、协议在哪层</h3><ul><li>#5 Curry《Agentic MarTech Stack》</li><li>#9 Adweek《Agentic Advertising Protocols》</li></ul></div>
+          <div class="day"><div class="d">DAY 4 · 增量入门</div><h3>先学会不信后台数字</h3><ul><li>#7 Orbit《Geo Holdout Method》</li><li>#8 Stella《Incremental Impact》</li></ul></div>
+          <div class="day"><div class="d">DAY 5 · 分配与治理</div><h3>MMM 与品牌事实源</h3><ul><li>#6 Search Engine Land《Meridian 指南》</li><li>#11 Celtra《Governance Is…》</li></ul></div>
+          <div class="day"><div class="d">DAY 6 · 落地校验</div><h3>护栏细节与行业现实</h3><ul><li>#12 VIMDRIVE《50,000 ad variants》</li><li>#10 Adweek《Agents &amp; Ad Dollars》</li></ul></div>
+        </div>
+        <p class="small" style="margin-top:14px">首批之后维持同一节奏：每天最多两篇，只推能改变框架或决策的文章，不凑数。</p>
+      </section>
+
+      <!-- 10 CAVEATS -->
+      <section id="caveats">
+        <h2><span class="no">10</span>未决问题与口径提醒</h2>
+        <div class="caveats"><ul>
+          <li><b>API 版本号变得很快。</b>Meta Marketing API v26.0（2026 年 7 月）与 Google Ads API 的版本来自索引 / 二手来源；动手时回官方文档复核，不要信任何二手转述的版本号。TikTok Marketing API 的速率限制与版本同理。</li>
+          <li><b>厂商效果数字未经独立核实。</b>所有「+14% / +22% / −36% CPA」都是平台自家测试；独立结果一贯更参差（如 Haus：Advantage+ 相对手动高估 12 个百分点；58% 的品牌在手动投放上测得更高 iROAS）。未找到 Advantage+ vs PMax vs Smart+ 在相同预算下的独立正面对决。</li>
+          <li><b>部分细节为二手 corroboration。</b>Meta GEM（2025-11-10）与 Meta 创意多样化指引（2025-04-22）经搜索与二手来源印证，未逐篇打开原文；Andromeda 原文本身已核验，支撑核心结论。</li>
+          <li><b>平台原生 Agent 的定价与可用范围仍在变</b>（Meta Muse 分层、Google Ads Advisor 的推出范围，部分仅限美国），框架未依赖这些信息。</li>
+          <li><b>本次调研的边界：</b>未在 Ads Manager / Ads API 里做实测，无账户级数据；初创公司的融资与客户成果未超出媒体报道范围核实。</li>
+        </ul></div>
+      </section>
+
+      <footer>
+        <p>来源：本页框架与全部 12 篇精读均来自 2026-11-17 的一手调研，文章链接逐条打开核验；平台效果数字为各平台官方口径，独立基准为 Stella（225 个地理实验）与 Haus（640 个 Meta 测试）的公开分析，均已在文中标注样本与 caveat。</p>
+        <p>范围：仅全球（非中文）来源，与中文来源的另一路调研互补。</p>
+      </footer>
+    </main>
+  </div>
+</div>
+
+<script>
+(function(){
+  var filterBtns = document.querySelectorAll('.filters button');
+  var arts = document.querySelectorAll('#articles .art');
+  filterBtns.forEach(function(btn){
+    btn.addEventListener('click', function(){
+      filterBtns.forEach(function(b){ b.setAttribute('aria-pressed','false'); });
+      btn.setAttribute('aria-pressed','true');
+      var f = btn.getAttribute('data-f');
+      arts.forEach(function(a){
+        a.style.display = (f === 'all' || a.getAttribute('data-cat') === f) ? '' : 'none';
+      });
+    });
+  });
+  var count = document.getElementById('readcount');
+  function updateCount(){
+    var n = document.querySelectorAll('#articles .art.read').length;
+    count.textContent = '已读 ' + n + ' / 12';
+  }
+  document.querySelectorAll('#articles .mark').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var art = btn.closest('.art');
+      var on = art.classList.toggle('read');
+      btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+      btn.textContent = on ? '已读 ✓' : '标记已读';
+      updateCount();
+    });
+  });
+})();
+</script>
+</body>
+</html>
