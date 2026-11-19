@@ -6,3 +6,4 @@
 |---|---|
 | 2026-11-17 | 首批 12 篇（见 `2026-11-17-first-batch.md`）：Anthropic《Building effective AI agents》、Meta《Andromeda》、Google《AI Max》、TikTok《Smart+》、Medium《Building an Agentic MarTech Stack》、Search Engine Land《Meridian 指南》、Orbit《Geo Holdout Method》、Stella《Incrementality Testing》、Adweek《Agentic Protocols Guide》、Adweek《AI Agents & Ad Dollars》、Celtra《Governance》、VIMDRIVE《50,000 ad variants》 |
 | 2026-11-18 | 2 篇（见 `2026-11-18.md`）：AdSovereign《Agent-Ready Ad Infrastructure》、Puglisi Consulting《Adobe GenStudio's Agentic Coworker Still Needs a Named Approver》 |
+| 2026-11-19 | 2 篇（见 `2026-11-19.md`）：ContentGrip《Tiger Brokers tests agentic OOH media buying》、The Keyword《TikTok Extends Smart+ Automation to Search Ads Campaigns》 |
