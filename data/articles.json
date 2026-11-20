@@ -286,5 +286,21 @@
   "cat": "开源项目 / 广告工具层",
   "src": "GitHub",
   "why": "全自动天花板样本：PPO 强化学习做预算分配 + Gemini 生成创意 + 四道评估门控 + spend 超阈值才叫人。激进程度远超生产可用的形态，暂不效仿，但适合对照「全自动的极限长什么样」。"
+ },
+ {
+  "date": "2026-11-20",
+  "title": "New context engineering challenges in late 2026（LangChain）",
+  "url": "https://www.langchain.com/blog/context-engineering-challenges-late-2026",
+  "cat": "Agent 设计 / 架构与编排",
+  "src": "LangChain Blog",
+  "why": "Harrison Chase 指出 agent 架构收敛后真正未解的难题：proactive/always-on agent 的上下文工程。核心问题是「主动但不烦人」的通知校准、记忆写入什么/何时写的智能层设计、异步 subagent 完成后如何回传上下文、以及 goal tracking（拆目标→跑实验→迭代而非重复）。这些恰好是「低人介入 agentic 投放」会撞上的问题：投放 Agent 本质就是常驻的 goal-driven agent。"
+ },
+ {
+  "date": "2026-11-20",
+  "title": "韩国平台竞赛：NAVER N Ads 与 Kakao AI Krew 的投放 Agent 实战",
+  "url": "https://en.sedaily.com/business/2026/11/07/korean-platforms-race-to-launch-ai-advertising-agents",
+  "cat": "AI 营销 / 平台与渠道",
+  "src": "Seoul Economic Daily",
+  "why": "日韩渠道的一手动态：NAVER 把广告主中心改造成 N Ads，AI 先诊断 campaign 再推改进项（诊断+方案+预期效果一屏呈现，一键应用），Ads Assistant 直接定位广告没跑起来的原因而不走客服；Kakao 12 月 closed beta 的 AI Krew 支持自然语言下目标，AI 定定向/出价/素材方向，改预算和落地页需人工批准。值得注意的共同设计是「AI 提案 + 人批准 + 一键执行」的人机边界，和自建投放 Agent 的护栏思路一致。"
  }
 ]

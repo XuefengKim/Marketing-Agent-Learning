@@ -58,7 +58,8 @@
      "refs": [
       "2026-11-01 Three Ways AI Memory Fails: Too Much, Nothing, Neither Trusted",
       "2026-11-07 Systemic Approach to Memory, Knowledge, and Context in Agentic AI Architectures",
-      "2026-11-03 I Let Claude Code Autonomously Run Ads for a Month"
+      "2026-11-03 I Let Claude Code Autonomously Run Ads for a Month",
+      "2026-11-20 New context engineering challenges in late 2026（LangChain）"
      ],
      "digest": "投放 Agent 长期跑的关键。三个要点：记忆是排序问题不是存储问题（按类型分衰减曲线）；Context/Knowledge/Memory 三层分开（策略规则是知识、历史出价效果是记忆）；最小可用实现就是 Claude Code 实验里那份每天自动写、冷启动先读的推理日志。"
     },
@@ -108,7 +109,8 @@
      "refs": [
       "2026-11-03 当 AI 开始「替你花钱」（36氪 × 快手江鹏对谈）",
       "2026-11-12 Ranking Engineer Agent (REA): Meta 官方工程博客",
-      "2026-11-09 当 AI 开始「替你花钱」（36氪 × 快手江鹏对谈）"
+      "2026-11-09 当 AI 开始「替你花钱」（36氪 × 快手江鹏对谈）",
+      "2026-11-20 Korean Platforms Race to Launch AI Advertising Agents"
      ],
      "digest": "平台投放自动化已到 90%（快手），Meta 内部用 REA 让 Agent 自己调排序模型。判断：平台内自动化吃掉的环节不要自建重复做，力气花在跨平台编排、素材切角和第一方信号上——这是自建体系的差异化空间。"
     },
