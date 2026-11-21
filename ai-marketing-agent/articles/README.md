@@ -8,3 +8,4 @@
 | 2026-11-18 | 2 篇（见 `2026-11-18.md`）：AdSovereign《Agent-Ready Ad Infrastructure》、Puglisi Consulting《Adobe GenStudio's Agentic Coworker Still Needs a Named Approver》 |
 | 2026-11-19 | 2 篇（见 `2026-11-19.md`）：ContentGrip《Tiger Brokers tests agentic OOH media buying》、The Keyword《TikTok Extends Smart+ Automation to Search Ads Campaigns》 |
 | 2026-11-20 | 2 篇（见 `2026-11-20.md`）：Alkimi《How Brands Are Using AI Agents in Advertising: 21 Sourced Examples by Job》、Conversion Conf《AI in Media Buying 2026: Launch, Optimisation, Rules》 |
+| 2026-11-21 | 2 篇（见 `2026-11-21.md`）：MarketSplash《6 Best AI Media Buying Agents and How Much Each Will Do Without Asking》、Affect Group《Google Meridian 2.2.0: MMM Calibration and Budget Optimization》 |
