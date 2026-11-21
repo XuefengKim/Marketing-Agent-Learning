@@ -302,5 +302,21 @@
   "cat": "AI 营销 / 平台与渠道",
   "src": "Seoul Economic Daily",
   "why": "日韩渠道的一手动态：NAVER 把广告主中心改造成 N Ads，AI 先诊断 campaign 再推改进项（诊断+方案+预期效果一屏呈现，一键应用），Ads Assistant 直接定位广告没跑起来的原因而不走客服；Kakao 12 月 closed beta 的 AI Krew 支持自然语言下目标，AI 定定向/出价/素材方向，改预算和落地页需人工批准。值得注意的共同设计是「AI 提案 + 人批准 + 一键执行」的人机边界，和自建投放 Agent 的护栏思路一致。"
+ },
+ {
+  "date": "2026-11-21",
+  "title": "AI vs In-House Video: 10% Lower Cost Per Lead on Meta",
+  "url": "https://joliveradvertising.com/case-study/ai-video-creative-vs-in-house-creative-meta-lead-gen-test",
+  "cat": "AI 营销 / 自动化投放案例",
+  "src": "J Oliver Advertising",
+  "why": "少见的第三方 agency 公开自费对照测试：同一账户、同受众、同预算结构，AI 视频对自家真人制作视频直接 head-to-head 跑两个月。诚实的方法论披露比结论更有价值：CTR 几乎完全相同（4.60% vs 4.61%），AI 的 CPL 优势来自更低的点击成本（$0.23 vs $0.28），且优势在全部三个人群一致出现（创意效应而非人群效应）；同时主动标出自己不是干净 split test、花费不对等。对自动化投放体系的意义：AI 素材的价值不在更抓眼球，而在单位注意力成本更低+可量产，这决定了素材 Agent 的验收指标应该盯 CPC/CPM 而非 CTR。"
+ },
+ {
+  "date": "2026-11-21",
+  "title": "State of AI Agent Memory 2026: Benchmarks & Trends（Mem0）",
+  "url": "https://mem0.ai/blog/state-of-ai-agent-memory-2026",
+  "cat": "Agent 设计 / 记忆与自进化",
+  "src": "Mem0（厂商视角，数据打折看）",
+  "why": "把 agent 记忆从玄学变成可对照的 benchmark 地图：LoCoMo（对话召回）/LongMemEval（知识更新、最挑剔）/BEAM（1M-10M token 规模）/DolphinBench（记忆是否改善工具行动结果）各有分工——核心选型逻辑是按 agent 的工作负载选 benchmark，而非找『最好』的。两个对投放 Agent 直接相关的点：评测必须同时盯准确率、token 消耗和延迟（每 query 26k token 的方案不可生产）；开放难题里 memory staleness 和按时间衰减正好对应预算决策依据会过期的问题。注意 Mem0 自己是利益相关方，架构思路可参考、自家分数打折看。"
  }
 ]
