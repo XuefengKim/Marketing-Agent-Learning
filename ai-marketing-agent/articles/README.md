@@ -11,3 +11,4 @@
 | 2026-11-21 | 2 篇（见 `2026-11-21.md`）：MarketSplash《6 Best AI Media Buying Agents and How Much Each Will Do Without Asking》、Affect Group《Google Meridian 2.2.0: MMM Calibration and Budget Optimization》 |
 | 2026-11-22 | 2 篇（见 `2026-11-22.md`）：PandaWM《Claude Agent SDK Meta Ads Guardrails & Human Approval (2026)》、AgenticAdvertising.org《Contextual signals, bought by an agent》 |
 | 2026-11-23 | 2 篇（见 `2026-11-23.md`）：BaseNoteData《How Google's Conversion Lift works》、Kult Studios《Meta AI ads automation: where it stands in 2026》 |
+| 2026-11-24 | 2 篇（见 `2026-11-24.md`）：Brandlio《AI Ad Edits on ChatGPT, Meta & Google: Opt-Out Checklist》、Vicky Lalwani《AI for Paid Media in 2027: A Strategy for Google and Meta》 |
