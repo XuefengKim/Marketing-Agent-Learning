@@ -350,5 +350,21 @@
     "cat": "AI 营销 / 框架与评估",
     "src": "AgentStatus（厂商视角，交叉引用了 HB-Eval/arXiv/Arize 原始研究）",
     "why": "用数据把「demo 能跑 ≠ 生产可用」量化了：理想条件 86.9% 通过率的 agent，遇到扰动掉到 44%，差距 42.9 个百分点——而传统 uptime 监控完全看不见这个 gap，因为 agent 一直在「运行」。架构分层数据最有用：裸 ReAct 扰动下 ~50%，ReAct+Reflect ~70%，Plan+Reflect 74.9%，即内建反思/自纠机制值 30 个百分点的可靠性。另一条曲线是复杂度：multi-tool→multi-turn→multi-agent→autonomous 失败率递增，自主性越高的 agent 复合错误越重。对投放 Agent 的直接启示：跨系统写操作的 agent 必须带反思+校验层，且监控指标要盯「行为正确性」而非可用性。注意作者本身卖 MCP 监控服务，框架可信、结论里带私货。"
+  },
+  {
+    "date": "2026-11-24",
+    "title": "意图驱动的增长中台：从自动化执行到 Agent 深度决策",
+    "url": "https://mp.weixin.qq.com/s/uqY8kzhDNzrrOle0_TTR0g",
+    "cat": "AI 营销 / 中台与工程",
+    "src": "微信公众号 kelovp.ai",
+    "why": "少数从「经营总账」视角拆投放 Agent 架构的中文长文：核心论点是 If-Then 规则引擎处理不了带上下文的模糊决策（ROI 跌可能是 eCPM 波动也可能是内容卡点），Agent 的价值在于识别商业化模型后对相同数据给出相反动作——IAA 看流量周转率、IAP 看付费卡点。架构上执行层减重（OpenClaw 降级为 Action Gateway）、Tools 资产化（商业化/素材/投放三类原子能力）、模型按意图自主编排；最后把「经营盘感」封装成私有 Skill 库作为壁垒的判断，和把优化师经验 Skill 化的思路一致。"
+  },
+  {
+    "date": "2026-11-24",
+    "title": "Automated Facebook Ads: Advantage+, Rules and AI in 2026",
+    "url": "https://adplug.app/automated-facebook-ads",
+    "cat": "AI 营销 / 平台与渠道",
+    "src": "AdPlug（12年 PPC、$100M+ 投放经验的一线视角）",
+    "why": "把 Meta 账户上的三层自动化职责边界画得很清楚：Advantage+ 负责分发（它不知道你的毛利）、Automated Rules 每 30 分钟机械执行（不管语境是否还成立）、AI 负责读数和提案但改动必须过人。可执行细节密集：Advantage+ 是 sales campaign 满足三个条件后的「状态」而非类型、API 默认开着 multi-advertiser ads 要手动关、老客户排除是 Meta 会保留的少数硬约束、月预算 3k 以下别拆多 campaign。对搭 Meta 自动化投放体系的人，这是一份按层分工的权限设计参考。"
   }
 ]

@@ -19,7 +19,8 @@
             "2026-11-02 AI Agent 工具广告投放怎么用？平台收走受众权后，广告人的四个施力点",
             "2026-11-09 AI Has Already Decided: First-Party Data Will Define Advertising's Agentic Era",
             "2026-11-17 Agentic is the label. Giving up control is the reality",
-            "2026-11-22 Google、Meta、TikTok 三线作战：平台黑盒各为其主，跨渠道协调层补位"
+            "2026-11-22 Google、Meta、TikTok 三线作战：平台黑盒各为其主，跨渠道协调层补位",
+            "2026-11-24 Automated Facebook Ads: Advantage+, Rules and AI in 2026"
           ],
           "digest": "关键认知：PMax/Advantage+ 是平台自己的优化引擎，不是你的 Agent。平台收走执行层后，你能控制的只剩三件事——喂什么 audience signal、给什么素材、设什么目标。而 agent 要安全做预算配置，前提是 deterministic、可审计的第一方数据。结论：先建数据地基，agent 自主才有意义。"
         },
@@ -51,7 +52,8 @@
           "name": "模块 B：数据与指标语义层",
           "refs": [
             "2026-11-11 站在 Agent 时代回看指标中台的价值，驱动智能体自主决策和行动",
-            "2026-11-09 AI Has Already Decided: First-Party Data Will Define Advertising's Agentic Era"
+            "2026-11-09 AI Has Already Decided: First-Party Data Will Define Advertising's Agentic Era",
+            "2026-11-24 意图驱动的增长中台：从自动化执行到 Agent 深度决策"
           ],
           "digest": "最容易跳过、最不该跳过的一层。核心问题：Agent 每次都要靠 prompt 重新对齐「ROAS 什么口径、归因窗口多少」就没法可靠决策。把指标定义结构化成机器可读的语义层，是 agent 之间以及 agent 与你之间通信的通用语言。"
         },
