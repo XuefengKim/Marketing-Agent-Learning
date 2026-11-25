@@ -12,3 +12,4 @@
 | 2026-11-22 | 2 篇（见 `2026-11-22.md`）：PandaWM《Claude Agent SDK Meta Ads Guardrails & Human Approval (2026)》、AgenticAdvertising.org《Contextual signals, bought by an agent》 |
 | 2026-11-23 | 2 篇（见 `2026-11-23.md`）：BaseNoteData《How Google's Conversion Lift works》、Kult Studios《Meta AI ads automation: where it stands in 2026》 |
 | 2026-11-24 | 2 篇（见 `2026-11-24.md`）：Brandlio《AI Ad Edits on ChatGPT, Meta & Google: Opt-Out Checklist》、Vicky Lalwani《AI for Paid Media in 2027: A Strategy for Google and Meta》 |
+| 2026-11-25 | 2 篇（见 `2026-11-25.md`）：TensorOps《Agentic AI in Advertising: A 2026 Field Guide (Media Buying & AdOps)》、Nadeer Nelliyullathil《Creative Is the New Targeting? What Buyers Control in 2026》 |
