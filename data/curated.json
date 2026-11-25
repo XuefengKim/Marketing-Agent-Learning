@@ -44,7 +44,8 @@
           "name": "模块 A：渠道连接层（MCP / API 封装）",
           "refs": [
             "2026-10-31 Synter MCP Server — 开源的跨平台广告 MCP",
-            "2026-11-12 Automate Meta Ads with a Claude Agent, the Meta CLI and Doop"
+            "2026-11-12 Automate Meta Ads with a Claude Agent, the Meta CLI and Doop",
+            "2026-11-25 LINE Yahoo「Agent i」开始对广告主计费：AI 对话内投放广告正式商业化"
           ],
           "digest": "动手起点。两个可抄的样板：Synter 的安全设计（destructive action 二次确认、billing 拒绝转为 tool result、dry_run）；Doop 的最简路径（把 Marketing API 包成 CLI、全 JSON 输出——LLM 擅长读 JSON 决策，不擅长点界面）。日韩 Yahoo/Naver 渠道 API 粗糙，参考它们的封装模式自建。"
         },
@@ -71,7 +72,8 @@
           "name": "模块 D：创意流水线",
           "refs": [
             "2026-11-11 AI 智能体赋能广告行业：创意素材生成解决方案实践",
-            "2026-11-16 We Built a Creative Feed Testing Agent with OpenClaw"
+            "2026-11-16 We Built a Creative Feed Testing Agent with OpenClaw",
+            "2026-11-25 Agentic Creative Testing for Paid Media: 2026 Workflow"
           ],
           "digest": "素材是投放的核心杠杆（素材磨损 3 天-2 周，AI 价值在产能追上衰退）。两个工程样板：AWS 的 multi-agent 素材生成（文案/生图/生视频子 Agent + 主 Agent 编排）；ButterGrow 的 contract-first 素材测试（Asset/PublishJob 类型契约、五阶段 typed event、失败可重放）。"
         },

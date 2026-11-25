@@ -366,5 +366,21 @@
     "cat": "AI 营销 / 平台与渠道",
     "src": "AdPlug（12年 PPC、$100M+ 投放经验的一线视角）",
     "why": "把 Meta 账户上的三层自动化职责边界画得很清楚：Advantage+ 负责分发（它不知道你的毛利）、Automated Rules 每 30 分钟机械执行（不管语境是否还成立）、AI 负责读数和提案但改动必须过人。可执行细节密集：Advantage+ 是 sales campaign 满足三个条件后的「状态」而非类型、API 默认开着 multi-advertiser ads 要手动关、老客户排除是 Meta 会保留的少数硬约束、月预算 3k 以下别拆多 campaign。对搭 Meta 自动化投放体系的人，这是一份按层分工的权限设计参考。"
+  },
+  {
+    "date": "2026-11-25",
+    "title": "Agentic Creative Testing for Paid Media: 2026 Workflow",
+    "url": "https://www.digitalapplied.com/blog/agentic-paid-media-creative-testing-workflow-2026",
+    "cat": "AI 营销 / 框架与评估",
+    "src": "digitalapplied.com",
+    "why": "把 generate→tag→launch→read→iterate 五阶段从五个孤立工具收拢成一个闭环，核心洞察是：素材产量问题已解决，差距在于结构化打标（attribute-level 归因）和读取节奏，而不是生成速度。文中最有价值的是明确了自动化之后剩给人的三个决策门（offer/claims 合规、品牌安全与 AI 披露、预算授权），以及哪些品类不该全自动化。对搭自动化投放体系的人来说，这就是「人机分工边界」的现成参考框架。"
+  },
+  {
+    "date": "2026-11-25",
+    "title": "LINE Yahoo「Agent i」开始对广告主计费：AI 对话内投放广告正式商业化",
+    "url": "https://www.lycorp.co.jp/ja/news/release/020776",
+    "cat": "AI 营销 / 平台与渠道",
+    "src": "lycorp.co.jp",
+    "why": "日本市场的标志性事件：Yahoo! JAPAN 的 AI Agent「Agent i」内，搜索联动购物广告已全量放开并开始对广告主收费，运营型 display 广告也在逐步扩大。机制上广告随用户与 Agent 对话的上下文实时触发，与既有的搜索/展示广告投放共用库存，广告主无需单独指定 Agent 版位——这意味着日韩渠道的投放体系需要开始考虑「AI 对话上下文」这个新归因入口。做 Yahoo Japan 渠道的同学值得直接读原文细节。"
   }
 ]
