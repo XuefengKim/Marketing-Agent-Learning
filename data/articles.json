@@ -382,5 +382,21 @@
     "cat": "AI 营销 / 平台与渠道",
     "src": "lycorp.co.jp",
     "why": "日本市场的标志性事件：Yahoo! JAPAN 的 AI Agent「Agent i」内，搜索联动购物广告已全量放开并开始对广告主收费，运营型 display 广告也在逐步扩大。机制上广告随用户与 Agent 对话的上下文实时触发，与既有的搜索/展示广告投放共用库存，广告主无需单独指定 Agent 版位——这意味着日韩渠道的投放体系需要开始考虑「AI 对话上下文」这个新归因入口。做 Yahoo Japan 渠道的同学值得直接读原文细节。"
+  },
+  {
+    "date": "2026-11-26",
+    "title": "易点天下 AI 中台的构建和智能体调优实践",
+    "url": "https://segmentfault.com/a/1190000048369501",
+    "cat": "AI 营销 / 中台与工程",
+    "src": "SegmentFault 阿里云云原生",
+    "why": "一家每天处理大量客户广告预算的出海营销公司（易点天下）公开的生产级落地：100+ 日活 Agent、130+ MCP、1500+ Skill，六步投放链路里哪些给 Agent、哪些留人工关口讲得很具体。最有价值的是「Skill 化」方法论——把老师傅的经验判断拆成有输入/步骤/标准的可复用能力，每次误报回灌进规则和评测集，再配合 Trace 留痕 + 回归评测当发布门禁 + 人审后才回灌生产，构成完整的可观测-可评估-可治理飞轮。对正在从 0 到 1 搭自动化投放体系的人来说，这基本就是目标态架构的参考实现。"
+  },
+  {
+    "date": "2026-11-26",
+    "title": "AI Agents for Paid Ads: What to Automate, What to Approve and What to Keep Human",
+    "url": "https://grayn.ai/blog/ai-agents-for-paid-ads",
+    "cat": "AI 营销 / 自动化投放案例",
+    "src": "Grayn Blog",
+    "why": "把「投放 Agent 该放开多少权限」这个问题做成了可执行的分级框架：报表和告警可全自动、预算/定向/建广由 Agent 起草人批准、出价目标和转化追踪保持人工。文章按三种 Agent 形态（平台内置 / 自有助手接 MCP / 独立工具）逐一列出它们今天在 Meta/Google 各能碰到什么、各自盲区在哪，附 2026 年 Meta ads MCP、Google Ads MCP、Ask Advisor 的关键时间线，结尾有 30 天渐进放权计划。对从 0 到 1 搭 agentic 投放体系，这是权限设计层面最直接可抄的一份清单。"
   }
 ]
