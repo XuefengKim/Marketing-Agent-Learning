@@ -398,5 +398,21 @@
     "cat": "AI 营销 / 自动化投放案例",
     "src": "Grayn Blog",
     "why": "把「投放 Agent 该放开多少权限」这个问题做成了可执行的分级框架：报表和告警可全自动、预算/定向/建广由 Agent 起草人批准、出价目标和转化追踪保持人工。文章按三种 Agent 形态（平台内置 / 自有助手接 MCP / 独立工具）逐一列出它们今天在 Meta/Google 各能碰到什么、各自盲区在哪，附 2026 年 Meta ads MCP、Google Ads MCP、Ask Advisor 的关键时间线，结尾有 30 天渐进放权计划。对从 0 到 1 搭 agentic 投放体系，这是权限设计层面最直接可抄的一份清单。"
+  },
+  {
+    "date": "2026-11-27",
+    "title": "How we built LangChain's Paid Media Agent（官方复盘+开源）",
+    "url": "https://langchain.com/blog/paid-media-agent",
+    "cat": "AI 营销 / 自动化投放案例",
+    "src": "LangChain Blog",
+    "why": "LangChain 自家投放 Agent 的完整工程复盘并开源了代码：Agent 常驻 Slack，每周一拉广告平台+数仓数据出分析，可提议关键词/定向/文案改动并走人工审批。最有价值的机制结论是「模型只做判断，代码负责一致性」——把计算、口径规则、安全护栏全部下沉到代码后，单个报告工作流成本降 40 倍、耗时从 18 分钟到 85 秒。这正是从 0 到 1 搭自动化投放体系的权限与成本设计范本，仓库可直接 fork 改造。"
+  },
+  {
+    "date": "2026-11-27",
+    "title": "The components of agent memory（Anthropic）",
+    "url": "https://www.anthropic.com/research/components-of-agent-memory",
+    "cat": "Agent 设计 / 记忆与自进化",
+    "src": "Anthropic Research",
+    "why": "Anthropic 官方拆解 Agent 记忆分层：transcripts → memory notes → wiki 表示 → 预注入上下文，核心机制是「dreaming」——用会话间空闲算力回放日志、纠错并整理记忆，类比睡眠期的记忆巩固。文中 CL-Bench 实验很说明问题：带记忆目录后各模型得分普遍从 ~0.3-0.6 提到 0.83+，且差距主要来自模型会不会把观察「收敛成经过验证的规则」。对想做长期运行的投放 Agent 来说，这是记忆架构设计的权威参考。"
   }
 ]

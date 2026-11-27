@@ -46,7 +46,8 @@
           "refs": [
             "2026-10-31 Synter MCP Server — 开源的跨平台广告 MCP",
             "2026-11-12 Automate Meta Ads with a Claude Agent, the Meta CLI and Doop",
-            "2026-11-25 LINE Yahoo「Agent i」开始对广告主计费：AI 对话内投放广告正式商业化"
+            "2026-11-25 LINE Yahoo「Agent i」开始对广告主计费：AI 对话内投放广告正式商业化",
+            "2026-11-27 How we built LangChain's Paid Media Agent（官方复盘+开源）"
           ],
           "digest": "动手起点。两个可抄的样板：Synter 的安全设计（destructive action 二次确认、billing 拒绝转为 tool result、dry_run）；Doop 的最简路径（把 Marketing API 包成 CLI、全 JSON 输出——LLM 擅长读 JSON 决策，不擅长点界面）。日韩 Yahoo/Naver 渠道 API 粗糙，参考它们的封装模式自建。"
         },
@@ -65,7 +66,8 @@
             "2026-11-01 Three Ways AI Memory Fails: Too Much, Nothing, Neither Trusted",
             "2026-11-07 Systemic Approach to Memory, Knowledge, and Context in Agentic AI Architectures",
             "2026-11-03 I Let Claude Code Autonomously Run Ads for a Month",
-            "2026-11-20 New context engineering challenges in late 2026（LangChain）"
+            "2026-11-20 New context engineering challenges in late 2026（LangChain）",
+            "2026-11-27 The components of agent memory（Anthropic）"
           ],
           "digest": "投放 Agent 长期跑的关键。三个要点：记忆是排序问题不是存储问题（按类型分衰减曲线）；Context/Knowledge/Memory 三层分开（策略规则是知识、历史出价效果是记忆）；最小可用实现就是 Claude Code 实验里那份每天自动写、冷启动先读的推理日志。"
         },
