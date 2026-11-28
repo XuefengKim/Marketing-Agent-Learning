@@ -15,3 +15,4 @@
 | 2026-11-25 | 2 篇（见 `2026-11-25.md`）：TensorOps《Agentic AI in Advertising: A 2026 Field Guide (Media Buying & AdOps)》、Nadeer Nelliyullathil《Creative Is the New Targeting? What Buyers Control in 2026》 |
 | 2026-11-26 | 2 篇（见 `2026-11-26.md`）：SitePoint《What an AI Marketing Agent Actually Does, and How to Build a Guarded One》、Influencers-Time《Agentic Budget Reallocation: Closing the Approval Gap》 |
 | 2026-11-27 | 2 篇（见 `2026-11-27.md`）：arXiv《AdProducer: Towards Agentic Advertising Video Generation》、Neeti Khatri《Triangulated measurement, and the leg nobody funds》 |
+| 2026-11-28 | 2 篇（见 `2026-11-28.md`）：AdSovereign《AI Agents for Media Buying: What Is Live in 2026》、Marketing Triangulation《Marketing Measurement Stack: What to Build at Each Budget》 |
